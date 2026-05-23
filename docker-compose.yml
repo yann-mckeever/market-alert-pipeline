@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: market_postgres_db
+    environment:
+      POSTGRES_USER: yann_mle
+      POSTGRES_PASSWORD: market_secure_password
+      POSTGRES_DB: market_risk_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/sql:/docker-entrypoint-initdb.d # Exécute automatiquement nos scripts SQL au démarrage
+
+volumes:
+  postgres_data:

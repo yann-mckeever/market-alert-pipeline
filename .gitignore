@@ -1,0 +1,58 @@
+# ==========================================
+# Environnements Virtuels Python (CRUCIAL)
+# ==========================================
+venv/
+.venv/
+env/
+ENV/
+*.venv
+
+# ==========================================
+# Fichiers de Configuration Secrets (Sécurité)
+# ==========================================
+.env
+.env.local
+.env.*.local
+secrets.json
+config.private.toml
+
+# ==========================================
+# Caches Python et Fichiers Compilés
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ==========================================
+# Fichiers Générés par le Système (WSL / Windows)
+# ==========================================
+# Fichiers invisibles de Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Fichiers invisibles de macOS (au cas où vous partagez votre code)
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ==========================================
+# Dossiers d'IDE et Éditeurs de Code
+# ==========================================
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# PyCharm / JetBrains
+.idea/
+
+# ==========================================
+# Données et Datascience (optionnel mais conseillé)
+# ==========================================
+*.log
+.ipynb_checkpoints/
