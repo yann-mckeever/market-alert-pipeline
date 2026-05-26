@@ -15,7 +15,7 @@ services:
 
 
   #Equipe 2 : Application de Machine Learning
-  ml_pipeline:
+  ml-pipeline:
     build: .
     container_name: maket_ml_pipeline
     environment:
