@@ -1,4 +1,5 @@
 services:
+  #Equipe 1 : La base de données PostgreSQL
   db:
     image: postgres:15-alpine
     container_name: market_postgres_db
@@ -11,6 +12,20 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./scripts/sql:/docker-entrypoint-initdb.d # Exécute automatiquement nos scripts SQL au démarrage
+
+
+  #Equipe 2 : Application de Machine Learning
+  ml_pipeline:
+    build: .
+    container_name: maket_ml_pipeline
+    environment:
+      - DB_USER=yann_mle
+      - DB_PASSWORD=market_secure_password
+      - DB_NAME=market_risk_db
+      - DB_HOST=db
+      - DB_PORT=5432
+    depends_on:
+      - db 
 
 volumes:
   postgres_data:
