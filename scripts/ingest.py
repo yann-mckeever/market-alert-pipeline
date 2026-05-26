@@ -31,21 +31,16 @@ class YahooFinanceIngestor(BaseIngestor):
         all_data = []
         for ticker in self.tickers:
             print(f"Extraction des données pour {ticker}...")
-            
             # Téléchargement des données
             data = yf.download(ticker, start=start_date, end=end_date)
-
             if not data.empty:
                 # 1. Si yfinance renvoie un MultiIndex (dépend des versions/tickers), on l'aplatit
                 if isinstance(data.columns, pd.MultiIndex):
                     data.columns = data.columns.get_level_values(0)
-                
                 # 2. On extrait immédiatement l'index temporel pour en faire une vraie colonne
                 data = data.reset_index()
-                
                 # 3. On force le renommage de toutes les colonnes existantes en minuscules
                 data.columns = [str(col).lower() for col in data.columns]
-                
                 # 4. Sécurité : yfinance nomme parfois la colonne 'date' ou 'date-time'.
                 # On renomme explicitement la première colonne du DataFrame en 'date'
                 data.rename(columns={data.columns[0]: 'date'}, inplace=True)
