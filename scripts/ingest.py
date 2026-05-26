@@ -23,6 +23,7 @@ class YahooFinanceIngestor(BaseIngestor):
     """
     def __init__(self, tickers: list):
         self.tickers = tickers
+        self.engine=engine
     
     def fetch_data(self, start_date: str, end_date: str) -> pd.DataFrame:
         """  
@@ -68,7 +69,7 @@ class YahooFinanceIngestor(BaseIngestor):
             return
         print(f"Insertion de {len(df)} lignes dans la base de données...")
 
-        with engine.connect() as connection:
+        with self.engine.begin() as connection:
             for _, row in df.iterrows():
                 query = text(""" 
                     INSERT INTO market_data (date, ticker, open_price, close_price, volume)
@@ -82,7 +83,6 @@ class YahooFinanceIngestor(BaseIngestor):
                     "close_price": float(row['close_price']),
                     "volume": int(row['volume'])
                 })
-            connection.commit()
         print("Données sauvegardées avec succès")
 
 # Bloc pour valider le script fonctionnel en local

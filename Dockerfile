@@ -15,7 +15,7 @@ COPY requirements.txt .
 #Installer les bibliothèques python
 RUN pip install --no-cache-dir -r requirements.txt
 
-#Copier les scipts dans le conteneur
+#Copier les scripts dans le conteneur
 COPY scripts/ ./scripts/
 
 #Variables d'environnement par défaut

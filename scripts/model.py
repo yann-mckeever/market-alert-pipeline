@@ -11,6 +11,7 @@ class MarketAnomalyDetector:
     def __init__(self,contamination: float=0.05):
         #Contamination : proportion d'anomalies estimées dans le modèle ici 5%
         self.model=IsolationForest(contamination=contamination, random_state=42)
+        self.engine=engine
         self.version="v1.0.0"
 
     def load_data_from_db(self, days_history:int=30)->pd.DataFrame:
@@ -96,7 +97,7 @@ class MarketAnomalyDetector:
         
         print(f"Sauvegarde de {len(df)} prédictions dans la table ml_predictions...")
 
-        with engine.connect() as connection:
+        with self.engine.begin() as connection:
             for _, row in df.iterrows():
                 query=text("""
                         INSERT INTO ml_predictions (prediction_date, ticker, predicted_value, is_anomaly, anomaly_score, model_version)
@@ -111,7 +112,6 @@ class MarketAnomalyDetector:
                     "anomaly_score":float(row['anomaly_score']),
                     "model_version":self.version
                 })
-            connection.commit()
         print("Prédictions enregistrées avec succès")
 
 if __name__=="__main__":
